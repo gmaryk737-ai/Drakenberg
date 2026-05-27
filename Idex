@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Калькулятор автохимии</title>
+<style>
+body { font-family: Arial; padding: 20px; }
+input { width: 100%; padding: 10px; margin: 6px 0; }
+.result { font-weight: bold; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<h2>Калькулятор автохимии</h2>
+
+<label>Продукт</label>
+<input type="text" id="product">
+
+<label>Цена</label>
+<input type="number" id="price">
+
+<label>Объем канистры (л/кг)</label>
+<input type="number" id="volume">
+
+<label>Замес химии (л)</label>
+<input type="number" id="mix">
+
+<label>Объем замеса (л)</label>
+<input type="number" id="mixVolume">
+
+<label>Расход на авто (л)</label>
+<input type="number" id="consumption">
+
+<div class="result">Общий объем раствора: <span id="totalMix">0</span></div>
+<div class="result">Количество машин: <span id="cars">0</span></div>
+<div class="result">Стоимость на авто: <span id="costPerCar">0</span></div>
+
+<script>
+function calc() {
+  let price = parseFloat(document.getElementById('price').value) || 0;
+  let volume = parseFloat(document.getElementById('volume').value) || 0;
+  let mix = parseFloat(document.getElementById('mix').value) || 0;
+  let mixVolume = parseFloat(document.getElementById('mixVolume').value) || 0;
+  let consumption = parseFloat(document.getElementById('consumption').value) || 0;
+
+  let totalMix = (volume && mix) ? (volume / mix) * mixVolume : 0;
+  let cars = (totalMix && consumption) ? totalMix / consumption : 0;
+  let costPerCar = (volume && mixVolume) ? (price * mix * consumption) / (volume * mixVolume) : 0;
+
+  document.getElementById('totalMix').innerText = totalMix.toFixed(2);
+  document.getElementById('cars').innerText = cars.toFixed(2);
+  document.getElementById('costPerCar').innerText = costPerCar.toFixed(2);
+}
+
+document.querySelectorAll("input").forEach(i => i.addEventListener("input", calc));
+</script>
+
+</body>
+</html>
